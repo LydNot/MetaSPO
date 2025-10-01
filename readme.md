@@ -1,4 +1,4 @@
-# System Prompt Optimization with Meta-Learning
+# [NeurIPS 2025] System Prompt Optimization with Meta-Learning
 [![Paper](https://img.shields.io/badge/arXiv-2505.09666-b31b1b)](https://arxiv.org/abs/2505.09666)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-orange)](https://www.python.org/downloads/release/python-310s0/)
 [![GCC](https://img.shields.io/badge/gcc-9.1%2B-blue)](https://gcc.gnu.org/gcc-9/)
