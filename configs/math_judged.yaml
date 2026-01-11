@@ -1,0 +1,7 @@
+meta_train_tasks:
+- algebra_small_judged
+- geometry_small_judged
+
+meta_test_tasks:
+- calculus_small_judged
+- probability_small_judged

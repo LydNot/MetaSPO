@@ -46,13 +46,18 @@ def get_args():
     args = parser.parse_args()
     args = load_config(args, args.task_config_path)
 
-    # put your openai api key in .env file
+    # Load API keys from .env file
     load_dotenv()
     args.openai_api_key = os.getenv("OPENAI_API_KEY")
+    args.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+    args.runpod_api_key = os.getenv("RUNPOD_API_KEY")
+    args.runpod_endpoint_id = os.getenv("RUNPOD_ENDPOINT_ID")
 
     return args
 
 if __name__ == "__main__":
     args = get_args()
     runner = Runner(args)
+    print("✅ Runner initialized! Starting training...", flush=True)
     runner.meta_train()
+    print("✅ Training complete!", flush=True)

@@ -38,7 +38,10 @@ class OpenAIModel:
 
     def gpt_chat_completion(self, prompt):
         backoff_time = 1
-        while True:
+        max_retries = 5
+        retry_count = 0
+
+        while retry_count < max_retries:
             try:
                 response = self.model.chat.completions.create(
                     messages=prompt,
@@ -47,6 +50,14 @@ class OpenAIModel:
                 )
                 return response.choices[0].message.content.strip()
             except Exception as e:
-                print(e, f" Sleeping {backoff_time} seconds...")
+                retry_count += 1
+                error_msg = f"OpenAI API error (attempt {retry_count}/{max_retries}): {e}"
+                print(error_msg)
+
+                if retry_count >= max_retries:
+                    print(f"Max retries reached. Failing.")
+                    raise RuntimeError(f"OpenAI API failed after {max_retries} attempts: {e}") from e
+
+                print(f"Retrying in {backoff_time} seconds...")
                 time.sleep(backoff_time)
                 backoff_time *= 1.5

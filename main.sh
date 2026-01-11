@@ -1,5 +1,9 @@
-MODEL_TYPE="vllm" # openai / vllm 
-MODEL_NAME="llama3.2_3B" # gpt-4o-mini / llama3.1_8B / llama3.2_3B / Qwen2.5_7B 
+MODEL_TYPE="vllm" # openai / vllm / runpod
+MODEL_NAME="llama3.2_3B" # gpt-4o-mini / llama3.1_8B / llama3.2_3B / Qwen2.5_7B / deepseek_v3 / deepseek_r1
+
+# For Runpod, set these in your .env file:
+#   RUNPOD_API_KEY=your_runpod_api_key
+#   RUNPOD_ENDPOINT_ID=your_endpoint_id
 
 METHOD='metaspo'
 DOMAIN='amazon'

@@ -91,11 +91,21 @@ class Runner:
             "user_top_k": args.user_top_k,
         }
 
+        # Select appropriate API key based on model type
+        base_api_key = args.openai_api_key
+        if args.base_model_type == "claude":
+            base_api_key = getattr(args, "anthropic_api_key", None)
+        elif args.base_model_type == "runpod":
+            base_api_key = getattr(args, "runpod_api_key", None)
+
         base_model_setting = {
             "model_type": args.base_model_type,
             "model_name": args.base_model_name,
             "temperature": args.base_model_temperature,
-            "api_key": args.openai_api_key,
+            "api_key": base_api_key,
+            # Runpod settings (used when model_type is "runpod")
+            "runpod_api_key": getattr(args, "runpod_api_key", None),
+            "endpoint_id": getattr(args, "runpod_endpoint_id", None),
         }
 
         optim_model_setting = {
@@ -103,6 +113,9 @@ class Runner:
             "model_name": args.optim_model_name,
             "temperature": args.optim_model_temperature,
             "api_key": args.openai_api_key,
+            # Runpod settings (used when model_type is "runpod")
+            "runpod_api_key": getattr(args, "runpod_api_key", None),
+            "endpoint_id": getattr(args, "runpod_endpoint_id", None),
         }
 
         task_setting = {

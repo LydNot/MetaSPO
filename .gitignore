@@ -1,3 +1,29 @@
 **/__pycache__/
 logs/
 .env
+
+# Training outputs and logs
+*.log
+training_*.log
+
+# Test scripts (except useful ones)
+test_openai_connection.py
+test_minimal_metaspo.py
+test_claude_integration.py
+
+# Cost estimation scripts (keep the judge one, it's useful)
+estimate_cost.py
+estimate_claude_cost.py
+
+# Datasets (can be large)
+datasets/
+
+# Temporary documentation
+*_SUMMARY.md
+*_GUIDE.md
+*_README.md
+GITHUB_ISSUE*.md
+*_SAFETY.md
+
+# Temporary scripts
+check_*.sh

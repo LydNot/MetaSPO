@@ -7,6 +7,9 @@ MODEL_DICT = {
     "llama3.1_8B": "meta-llama/Meta-Llama-3.1-8B-Instruct",
     "llama3.2_3B": "meta-llama/Llama-3.2-3B-Instruct",
     "Qwen2.5_7B": "Qwen/Qwen2.5-7B-Instruct",
+    "deepseek_7B": "deepseek-ai/deepseek-llm-7b-chat",
+    "deepseek_v2": "deepseek-ai/DeepSeek-V2-Lite-Chat",
+    "deepseek_v3": "deepseek-ai/DeepSeek-V3",
 }
 
 
@@ -17,7 +20,7 @@ class VLLM:
         temperature: float,
         max_model_len: int = 3000,
         dtype: str = "float16",
-        num_gpus: int = torch.cuda.device_count(),
+        num_gpus: int = 0,  # Force CPU mode for Mac
         gpu_memory_utilization: float = 0.90,
         **kwargs,
     ):
@@ -25,6 +28,9 @@ class VLLM:
         self.temperature = temperature
         self.params = self._create_sampling_params(max_model_len)
         self.tokenizer = self._initialize_tokenizer()
+        # Force CPU for Mac
+        if num_gpus == 0 or not torch.cuda.is_available():
+            num_gpus = 1  # Set to 1 for vLLM CPU mode
         self.model = self._initialize_model(max_model_len, dtype, num_gpus, gpu_memory_utilization)
 
     def _get_model_name(self, model_name: str) -> str:

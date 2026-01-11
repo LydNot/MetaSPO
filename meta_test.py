@@ -50,9 +50,11 @@ def get_args():
     args = parser.parse_args()
     args = load_config(args, args.task_config_path)
 
-    # put your openai api key in .env file
+    # Load API keys from .env file
     load_dotenv()
     args.openai_api_key = os.getenv("OPENAI_API_KEY")
+    args.runpod_api_key = os.getenv("RUNPOD_API_KEY")
+    args.runpod_endpoint_id = os.getenv("RUNPOD_ENDPOINT_ID")
 
     return args
 

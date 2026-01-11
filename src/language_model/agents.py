@@ -3,10 +3,12 @@ import re
 import numpy as np
 from .openai_model import OpenAIModel
 from .vllm_model import VLLM
+from .runpod_model import RunpodModel
+from .claude_model import ClaudeModel
 from ..tasks import BaseTask
 
 
-LANGUAGE_MODELS = {"openai": OpenAIModel, "vllm": VLLM}
+LANGUAGE_MODELS = {"openai": OpenAIModel, "vllm": VLLM, "runpod": RunpodModel, "claude": ClaudeModel}
 
 
 def get_language_model(language_model_name):
@@ -35,6 +37,10 @@ class BaseModel:
         responses = self._batch_forward_func(batch_prompts)
         preds = task.batch_clean_responses(responses)
         labels = batch["answer"]
+
+        # Pass questions to task (for LLM-as-judge evaluation)
+        if hasattr(task, 'set_current_questions'):
+            task.set_current_questions(batch["question"])
 
         # Calculating evaluation metrics
         correct = task.cal_correct(preds=preds, labels=labels)
